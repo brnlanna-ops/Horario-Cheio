@@ -124,7 +124,7 @@ function shopView(){
   <section><label>Nome do negócio<input id="sn"></label><label>Endereço do link (letras minúsculas, números e hífen)<input id="sl" placeholder="barbearia-do-joao"></label><label>WhatsApp com DDD<input id="sw" inputmode="tel"></label><button class="cta" id="mk">Criar página</button></section>`;
   $('#mk').onclick=async()=>{
     const {error}=await sb.from('shops').insert({name:$('#sn').value.trim(),slug:$('#sl').value.trim(),whatsapp:$('#sw').value.trim()});
-    error?toast(error.code==='23505'?'Esse endereço já está em uso':'Confira o nome e o endereço do link'):ownerApp()}}
+    error?toast(error.code==='23505'?'Esse endereço já está em uso':('Erro: '+error.message+' ('+(error.code||'sem código')+')')):ownerApp()}}
 
 function billingHtml(b){
   if(!b)return '';
