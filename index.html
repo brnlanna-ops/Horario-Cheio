@@ -5,39 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Horário Cheio</title>
 <style>
-:root{--bg:#F3F5F2;--sf:#fff;--ink:#17262B;--mut:#5B6B70;--line:#D9E0DC;--red:#C2362B;--blue:#24577F;--ok:#1E7A52}
-@media (prefers-color-scheme:dark){:root{--bg:#101A1E;--sf:#18262B;--ink:#EAF0EE;--mut:#9DB0B5;--line:#2B3E44;--red:#E5584C;--blue:#6FA6D1;--ok:#4CC08A}}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
+:root{--bg:#1C2740;--sf:#2A3A5A;--ink:#FFFFFF;--mut:#A9B4CC;--line:rgba(255,255,255,.10);--red:#FF8A5B;--blue:#FF8A5B;--on:#1C2740;--soft:#34466B;--ok:#4CC08A;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.pole{height:10px;background:repeating-linear-gradient(-45deg,var(--red) 0 12px,var(--sf) 12px 24px,var(--blue) 24px 36px,var(--sf) 36px 48px)}
-.wrap{max-width:820px;margin:0 auto;padding:0 16px 48px}
-h1,h2{line-height:1.15;margin:0}h1{font-size:1.9rem;padding:22px 0 4px}h2{font-size:1.1rem;margin-bottom:12px}
-p.m{color:var(--mut);margin:4px 0}
-section{background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+h1,h2{font-family:Manrope,system-ui,sans-serif;color:var(--ink);line-height:1.12;margin:0;font-weight:800;letter-spacing:-.02em}
+h1{font-size:clamp(2rem,6vw,2.6rem);padding:34px 0 8px}
+h2{font-size:1.25rem;margin-bottom:14px}
+p.m{color:var(--mut);margin:6px 0}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px 64px}
+section{background:var(--sf);border-radius:24px;padding:22px;margin-top:16px;box-shadow:0 14px 32px -18px rgba(0,0,0,.5)}
 button,input{font:inherit;color:inherit}
-input{width:100%;margin:4px 0 10px;padding:11px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg)}
-label{display:block;font-size:.9rem;color:var(--mut)}
-button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.opt{text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px;cursor:pointer}
+input{width:100%;margin:6px 0 14px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 4px rgba(255,138,91,.2)}
+label{display:block;font-size:.88rem;color:var(--mut);font-weight:700}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.opt{text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:14px;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--red)}
+.opt b{display:block;font-weight:800}
 .opt small{display:block;color:var(--mut)}
-.opt[aria-pressed="true"]{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
-.opt:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
-.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px;margin-top:12px}.slots .opt,.days .opt{text-align:center}
-.days{display:flex;gap:8px;overflow-x:auto}.days .opt{flex:0 0 auto;min-width:70px}
-.cta{width:100%;padding:14px;border:0;border-radius:10px;background:var(--red);color:#fff;font-weight:700;cursor:pointer}
-.ghost{background:none;border:1.5px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
-.row{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}
-.row:first-of-type{border-top:0}.row .i{flex:1;min-width:140px}.row small{display:block;color:var(--mut)}
-.link{word-break:break-all;background:var(--bg);padding:10px;border-radius:8px;border:1.5px dashed var(--line)}
-a.wa{display:inline-block;margin-top:8px;padding:12px 16px;border-radius:10px;background:var(--ok);color:#fff;font-weight:700;text-decoration:none}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s}
+.opt[aria-pressed="true"]{border-color:var(--red);background:var(--red);color:var(--on)}
+.opt[aria-pressed="true"] small{color:var(--on);opacity:.8}
+.opt:disabled{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:9px;margin-top:14px}
+.slots .opt,.days .opt{text-align:center;padding:12px 4px;font-weight:800}
+.days{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
+.days .opt{flex:0 0 auto;min-width:74px;border-radius:999px}
+.cta{width:100%;padding:17px;border:0;border-radius:999px;background:var(--red);color:var(--on);font-weight:800;cursor:pointer;margin-top:10px}
+.cta:disabled{opacity:.4;cursor:not-allowed}
+.ghost{background:#fff;color:var(--on);border:0;border-radius:999px;padding:10px 20px;font-weight:800;cursor:pointer}
+.ghost:hover{background:var(--red)}
+a.wa{display:inline-block;margin-top:10px;padding:14px 22px;border-radius:999px;background:var(--ok);color:#fff;font-weight:800;text-decoration:none}
+.row{display:flex;align-items:center;gap:14px;padding:14px 16px;margin-top:10px;border-radius:18px;background:var(--bg);flex-wrap:wrap}
+.row .i{flex:1;min-width:140px}
+.row small{display:block;color:var(--mut)}
+.link{word-break:break-all;background:var(--bg);padding:13px 15px;border-radius:14px;border:1px dashed rgba(255,255,255,.2);font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+details{border-top:1px solid var(--line);padding:4px 0}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;padding:12px 0;font-weight:800;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";float:right;color:var(--red);font-weight:800}
+details[open] summary::after{content:"–"}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#fff;color:var(--on);padding:12px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s;font-weight:700;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);max-width:90vw;text-align:center}
 #toast.on{opacity:1}
+@media (max-width:520px){.two{grid-template-columns:1fr}section{padding:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="pole"></div>
+
 <div class="wrap"><main id="app"><p class="m">Carregando…</p></main></div>
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
@@ -65,6 +83,15 @@ async function clientApp(slug){
   const {data:shop}=await sb.from('shops').select().eq('slug',slug).maybeSingle();
   if(!shop){app.innerHTML='<h1>Página não encontrada</h1><p class="m">Confira o link com a barbearia.</p>';return}
   document.title=shop.name;
+  if(shop.color)document.documentElement.style.setProperty('--red',shop.color);
+  const cc=new URLSearchParams(location.search).get('cancelar');
+  if(cc){
+    const {data:r}=await sb.rpc('cancel_booking',{p_code:cc});
+    const msg=r==='ok'?'Seu horário foi cancelado e já está livre na agenda.'
+      :r==='late'?'O prazo para cancelar este horário já encerrou. Entre em contato com a barbearia.'
+      :'Não encontramos esse agendamento. Ele pode já ter sido cancelado.';
+    app.innerHTML=`<h1>${esc(shop.name)}</h1><section><p>${msg}</p><p><a class="ghost" href="?loja=${esc(slug)}">Voltar ao agendamento</a></p></section>`;
+    return}
   const {data:ativo}=await sb.rpc('shop_is_active',{s:shop.id});
   if(!ativo){const w=(shop.whatsapp||'').replace(/\D/g,'');
     app.innerHTML=`<h1>${esc(shop.name)}</h1><p class="m">Agendamento online indisponível no momento.${w?' Fale direto com a barbearia:':''}</p>${w?`<a class="wa" href="https://wa.me/55${w}" target="_blank" rel="noopener">Chamar no WhatsApp</a>`:''}`;return}
@@ -75,11 +102,11 @@ async function clientApp(slug){
     return (st.pro==='any'?pros:pros.filter(p=>p.id===st.pro)).some(p=>!st.taken.some(k=>k.pro_id===p.id&&k.time===t))};
   async function load(){const {data}=await sb.rpc('taken_slots',{p_shop:shop.id,p_day:st.day});st.taken=data||[];draw()}
   function draw(){
-    app.innerHTML=`<h1>${esc(shop.name)}</h1><p class="m">Escolha o serviço e o horário.</p>
+    app.innerHTML=`${shop.logo_url?`<img src="${esc(shop.logo_url)}" alt="" style="max-height:80px;margin-top:12px">`:''}<h1>${esc(shop.name)}</h1><p class="m">Escolha o serviço e o horário.</p>
     <section><h2>1. Qual serviço?</h2><div class="grid">${svcs.map(s=>`<button class="opt" data-k="svc" data-v="${s.id}" aria-pressed="${st.svc===s.id}"><b>${esc(s.name)}</b><small>${money(s.price)} · ${s.minutes} min</small></button>`).join('')||'<p class="m">Nenhum serviço cadastrado ainda.</p>'}</div></section>
     <section><h2>2. Com quem?</h2><div class="grid"><button class="opt" data-k="pro" data-v="any" aria-pressed="${st.pro==='any'}"><b>Sem preferência</b></button>${pros.map(p=>`<button class="opt" data-k="pro" data-v="${p.id}" aria-pressed="${st.pro===p.id}"><b>${esc(p.name)}</b></button>`).join('')}</div></section>
     <section><h2>3. Dia e horário</h2>${chips(st.day)}<div class="slots">${TIMES.map(t=>`<button class="opt" data-k="time" data-v="${t}" aria-pressed="${st.time===t}" ${free(t)?'':'disabled'}>${t}</button>`).join('')}</div></section>
-    <section><h2>4. Seus dados</h2><label>Nome<input id="nm" value="${esc(st.nm)}" autocomplete="name"></label><label>WhatsApp<input id="ph" value="${esc(st.ph)}" inputmode="tel" autocomplete="tel" placeholder="(31) 99999-9999"></label><button class="cta" data-go>Reservar horário</button></section>`}
+    <section><h2>4. Seus dados</h2><label>Nome<input id="nm" value="${esc(st.nm)}" autocomplete="name"></label><label>WhatsApp<input id="ph" value="${esc(st.ph)}" inputmode="tel" autocomplete="tel" placeholder="(31) 99999-9999"></label>${Number(shop.deposit_value)>0?`<p class="m"><b>Sinal de ${money(shop.deposit_value)} para confirmar a reserva, pago em até ${shop.deposit_hours||2} horas.</b></p>`:''}<p class="m">${esc(shop.cancel_policy||'')}</p><button class="cta" data-go>Reservar horário</button></section>`}
   app.onclick=async e=>{
     const b=e.target.closest('button');if(!b)return;
     if($('#nm')){st.nm=$('#nm').value;st.ph=$('#ph').value}
@@ -91,15 +118,17 @@ async function clientApp(slug){
   async function book(){
     const svc=svcs.find(s=>s.id===st.svc),nm=st.nm.trim(),ph=st.ph.trim();
     if(!svc||!st.time||!nm||ph.replace(/\D/g,'').length<10)return toast('Escolha serviço e horário e informe nome e WhatsApp com DDD');
+    const code=[...crypto.getRandomValues(new Uint8Array(12))].map(b=>b.toString(16).padStart(2,'0')).join('');
     for(const p of cands()){
-      const {error}=await sb.from('bookings').insert({shop_id:shop.id,pro_id:p.id,service_name:svc.name,price:svc.price,day:st.day,time:st.time,client_name:nm,client_phone:ph});
-      if(!error)return done(p,svc,nm);
+      const {error}=await sb.from('bookings').insert({shop_id:shop.id,pro_id:p.id,service_name:svc.name,price:svc.price,day:st.day,time:st.time,client_name:nm,client_phone:ph,cancel_code:code});
+      if(!error)return done(p,svc,nm,code);
       if(error.code!=='23505')return toast('Não foi possível reservar. Tente de novo.')}
     toast('Esse horário acabou de ser ocupado');load()}
-  function done(p,svc,nm){
+  function done(p,svc,nm,code){
+    const sinal=Number(shop.deposit_value)>0;
     const msg=encodeURIComponent(`Olá! Agendei ${svc.name} com ${p.name} em ${br(st.day)} às ${st.time}. Meu nome: ${nm}`);
     const num=(shop.whatsapp||'').replace(/\D/g,'');
-    app.innerHTML=`<h1>Horário reservado</h1><section><p><b>${esc(svc.name)}</b> com ${esc(p.name)}<br>${br(st.day)} às ${st.time} · ${money(svc.price)}</p>${num?`<a class="wa" href="https://wa.me/55${num}?text=${msg}" target="_blank" rel="noopener">Avisar a barbearia no WhatsApp</a>`:''}</section>`}
+    app.innerHTML=`<h1>${sinal?'Quase lá':'Horário reservado'}</h1>${sinal?`<section><h2>Pague o sinal de ${money(shop.deposit_value)}</h2><p class="m">Chave Pix: <b>${esc(shop.pix_key||'consulte a barbearia')}</b></p><p class="m">Envie o comprovante no WhatsApp em até ${shop.deposit_hours||2} horas para garantir o horário.</p></section>`:''}<section><p><b>${esc(svc.name)}</b> com ${esc(p.name)}<br>${br(st.day)} às ${st.time} · ${money(svc.price)}</p>${num?`<a class="wa" href="https://wa.me/55${num}?text=${msg}" target="_blank" rel="noopener">${sinal?'Enviar comprovante do sinal no WhatsApp':'Avisar a barbearia no WhatsApp'}</a>`:''}<p class="m"><a href="?loja=${esc(slug)}&cancelar=${code}">Cancelar meu horário</a></p></section>`}
   load()}
 
 /* ---------- Área do dono (sem ?loja=) ---------- */
@@ -112,7 +141,16 @@ async function ownerApp(){
 function authView(){
   app.innerHTML=`<h1>Horário Cheio</h1><p class="m">Entre para gerenciar a agenda da sua barbearia ou salão.</p>
   <section><label>E-mail<input id="em" type="email" autocomplete="email"></label><label>Senha (mínimo 6 caracteres)<input id="pw" type="password" autocomplete="current-password"></label>
-  <div class="two"><button class="cta" id="in">Entrar</button><button class="ghost" id="up">Criar conta</button></div></section>`;
+  <div class="two"><button class="cta" id="in">Entrar</button><button class="ghost" id="up">Criar conta</button></div></section>
+  <section><h2>Perguntas frequentes</h2>
+  <details style="margin-bottom:10px"><summary><b>O que é o Horário Cheio?</b></summary><p class="m">Um sistema de agenda online para barbearias, salões e negócios de beleza. Seu cliente agenda pelo seu link, e você vê tudo no painel.</p></details>
+  <details style="margin-bottom:10px"><summary><b>Quanto custa?</b></summary><p class="m">R$ 49 por mês, sem taxa de adesão e sem contrato. Você pode cancelar quando quiser.</p></details>
+  <details style="margin-bottom:10px"><summary><b>Tem teste grátis?</b></summary><p class="m">Sim, 7 dias para testar tudo antes de pagar.</p></details>
+  <details style="margin-bottom:10px"><summary><b>Meu cliente precisa instalar algo?</b></summary><p class="m">Não. Ele só abre o seu link no celular ou no computador e agenda, sem criar conta.</p></details>
+  <details style="margin-bottom:10px"><summary><b>Posso colocar meu logo e minha cor?</b></summary><p class="m">Sim. Você envia seu logo e escolhe a cor principal, e a página de agendamento fica com a sua identidade.</p></details>
+  <details style="margin-bottom:10px"><summary><b>Meu cliente pode cancelar sozinho?</b></summary><p class="m">Sim, pelo link que ele recebe na confirmação, desde que esteja dentro do prazo que você definir.</p></details>
+  <details><summary><b>Os dados dos meus clientes ficam seguros?</b></summary><p class="m">Cada negócio vê apenas os próprios dados. Os clientes não veem telefone nem nome de outras pessoas.</p></details>
+  </section>`;
   const cred=()=>({email:$('#em').value.trim(),password:$('#pw').value});
   $('#in').onclick=async()=>{const {error}=await sb.auth.signInWithPassword(cred());error?toast('E-mail ou senha incorretos'):ownerApp()};
   $('#up').onclick=async()=>{const {data,error}=await sb.auth.signUp(cred());
@@ -134,7 +172,7 @@ function billingHtml(b){
     trial:`Teste grátis até ${br(b.trial_ends)}. Depois, ${money(b.price)} por mês.`}[b.status];
   if(b.status==='active')return `<section><h2>Sua assinatura</h2><p class="m">${t}</p></section>`;
   return `<section><h2>Sua assinatura</h2><p class="m">${t}</p>`+(b.invoice_url
-    ?`<a class="wa" href="${esc(b.invoice_url)}" target="_blank" rel="noopener">Abrir fatura</a>`
+    ?`<a class="wa" href="${esc(b.invoice_url)}" target="_blank" rel="noopener">Abrir pagamento</a>`
     :`<label>CPF ou CNPJ para a cobrança<input id="doc" inputmode="numeric"></label><button class="cta" id="sub">Assinar por ${money(b.price)}/mês</button>`)+`</section>`}
 async function subscribe(){
   const {data,error}=await sb.functions.invoke('criar-assinatura',{body:{cpfCnpj:$('#doc').value}});
@@ -150,17 +188,62 @@ async function panel(shop){
       sb.from('services').select().eq('shop_id',shop.id).order('name'),
       sb.from('pros').select().eq('shop_id',shop.id).order('name')]);
     const {data:bill}=await sb.from('billing').select().eq('shop_id',shop.id).maybeSingle();
-    const tot=bks.reduce((a,b)=>a+Number(b.price),0);
+    const vivos=bks.filter(b=>b.status==='confirmado'||Date.now()-new Date(b.created_at)<=(shop.deposit_hours||2)*3600000);
+    const tot=vivos.reduce((a,b)=>a+Number(b.price),0);
     app.innerHTML=`<h1>${esc(shop.name)}</h1>
     <section><h2>Link para seus clientes</h2><div class="link">${esc(link)}</div><p><button class="ghost" id="cp">Copiar link</button> <button class="ghost" id="out">Sair</button></p></section>
+    <section><h2>Sinal para reserva</h2>
+    <label>Valor do sinal em R$ (0 = sem sinal)<input id="dVal" inputmode="decimal" value="${Number(shop.deposit_value||0).toFixed(2)}"></label>
+    <label>Chave Pix para receber o sinal<input id="dPix" value="${esc(shop.pix_key||'')}"></label>
+    <label>Prazo para pagar o sinal (horas)<input id="dHours" inputmode="numeric" value="${shop.deposit_hours||2}"></label>
+    <button class="ghost" id="saveDeposit">Salvar sinal</button></section>
+    <section><h2>Cancelamento</h2>
+    <label>Cancelar até quantas horas antes<input id="cHours" type="number" min="0" max="72" value="${shop.cancel_hours??2}"></label>
+    <label>Texto da política (aparece antes de reservar)<input id="cPolicy" value="${esc(shop.cancel_policy||'')}"></label>
+    <button class="ghost" id="savePolicy">Salvar política</button></section>
+    <section><h2>Identidade visual</h2>
+    <label>Logo (imagem, até 2 MB)<input id="logoFile" type="file" accept="image/*"></label>
+    <label>Cor principal<input id="brandColor" type="color" value="${shop.color||'#C2362B'}" style="height:44px;padding:4px"></label>
+    <button class="ghost" id="saveBrand">Salvar identidade</button></section>
     ${billingHtml(bill)}
-    <section><h2>Agenda</h2>${chips(day)}<p class="m"><b>${bks.length}</b> agendamentos · previsto <b>${money(tot)}</b></p>
-    ${bks.map(b=>`<div class="row"><b>${b.time}</b><div class="i"><b>${esc(b.client_name)}</b><small>${esc(b.service_name)} · ${esc(b.pros?.name)} · ${money(b.price)} · ${esc(b.client_phone)}</small></div><button class="ghost" data-del="bookings" data-id="${b.id}">Cancelar</button></div>`).join('')||'<p class="m">Nenhum agendamento neste dia.</p>'}</section>
+    <section><h2>Agenda</h2>${chips(day)}<p class="m"><b>${vivos.length}</b> agendamentos · previsto <b>${money(tot)}</b></p>
+    ${vivos.map(b=>`<div class="row"><b>${b.time}</b><div class="i"><b>${esc(b.client_name)}</b>${b.status==='aguardando_sinal'?' <span style="color:var(--red)">· aguardando sinal</span>':''}<small>${esc(b.service_name)} · ${esc(b.pros?.name)} · ${money(b.price)} · ${esc(b.client_phone)}</small></div>${b.status==='aguardando_sinal'?`<button class="ghost" data-ok="${b.id}">Confirmar sinal</button>`:''}<button class="ghost" data-del="bookings" data-id="${b.id}">Cancelar</button></div>`).join('')||'<p class="m">Nenhum agendamento neste dia.</p>'}</section>
     <section><h2>Serviços</h2>${svcs.map(s=>`<div class="row"><div class="i"><b>${esc(s.name)}</b><small>${s.minutes} min · ${money(s.price)}</small></div><button class="ghost" data-del="services" data-id="${s.id}">Remover</button></div>`).join('')}
     <div class="two"><label>Nome<input id="an"></label><label>Preço (R$)<input id="ap" inputmode="decimal"></label></div><button class="ghost" id="as">Adicionar serviço</button></section>
     <section><h2>Profissionais</h2>${pros.map(p=>`<div class="row"><div class="i"><b>${esc(p.name)}</b></div><button class="ghost" data-del="pros" data-id="${p.id}">Remover</button></div>`).join('')||'<p class="m">Adicione ao menos um profissional para receber reservas.</p>'}
     <label>Nome<input id="pn"></label><button class="ghost" id="ap2">Adicionar profissional</button></section>`;
     $('#cp').onclick=()=>navigator.clipboard.writeText(link).then(()=>toast('Link copiado'));
+    $('#saveDeposit').onclick=async()=>{
+      const v=parseFloat($('#dVal').value.replace(',','.'))||0,k=$('#dPix').value.trim();
+      if(v<0)return toast('O sinal não pode ser negativo');
+      const ph=parseInt($('#dHours').value,10);
+      if(v>0&&!k)return toast('Informe a chave Pix para receber o sinal');
+      if(isNaN(ph)||ph<1||ph>72)return toast('Prazo de 1 a 72 horas');
+      const {error}=await sb.from('shops').update({deposit_value:v,pix_key:k,deposit_hours:ph}).eq('id',shop.id);
+      if(error)return toast('Erro: '+error.message);
+      Object.assign(shop,{deposit_value:v,pix_key:k,deposit_hours:ph});toast('Sinal salvo');draw()};
+    $('#savePolicy').onclick=async()=>{
+      const h=parseInt($('#cHours').value,10),t=$('#cPolicy').value.trim();
+      if(isNaN(h)||h<0||h>72)return toast('Use de 0 a 72 horas');
+      const {error}=await sb.from('shops').update({cancel_hours:h,cancel_policy:t}).eq('id',shop.id);
+      if(error)return toast('Erro: '+error.message);
+      Object.assign(shop,{cancel_hours:h,cancel_policy:t});toast('Política salva')};
+    $('#saveBrand').onclick=async()=>{
+      const btn=$('#saveBrand');btn.disabled=true;
+      let logo_url=shop.logo_url;
+      const f=$('#logoFile').files[0];
+      if(f){
+        if(f.size>2*1024*1024){btn.disabled=false;return toast('O logo deve ter até 2 MB')}
+        const path=shop.owner+'/logo-'+Date.now();
+        const {error:ue}=await sb.storage.from('logos').upload(path,f,{upsert:true,contentType:f.type});
+        if(ue){btn.disabled=false;return toast('Erro no logo: '+ue.message)}
+        logo_url=sb.storage.from('logos').getPublicUrl(path).data.publicUrl;
+      }
+      const color=$('#brandColor').value;
+      const {error}=await sb.from('shops').update({color,logo_url}).eq('id',shop.id);
+      if(error){btn.disabled=false;return toast('Erro ao salvar: '+error.message)}
+      Object.assign(shop,{color,logo_url});
+      toast('Identidade salva');draw()};
     $('#out').onclick=async()=>{await sb.auth.signOut();ownerApp()};
     $('#as').onclick=async()=>{const p=parseFloat($('#ap').value.replace(',','.')),n=$('#an').value.trim();
       if(!n||!(p>0))return toast('Informe nome e preço');
@@ -170,6 +253,7 @@ async function panel(shop){
   app.onclick=async e=>{
     const b=e.target.closest('button');if(!b)return;
     if(b.id==='sub')return subscribe();
+    if(b.dataset.ok){await sb.from('bookings').update({status:'confirmado'}).eq('id',b.dataset.ok);toast('Sinal confirmado');return draw()}
     if(b.dataset.k==='day'){day=b.dataset.v;return draw()}
     if(b.dataset.del&&confirm('Confirmar?')){await sb.from(b.dataset.del).delete().eq('id',b.dataset.id);draw()}};
   draw()}
